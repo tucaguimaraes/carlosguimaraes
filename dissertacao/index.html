@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrando o Pensamento Computacional ao Currículo | Carlos Artur Guimarães</title>
+<meta name="description" content="Dissertação de mestrado sobre formação docente em Pensamento Computacional — UFRN/IMD, 2022.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--text:#111;--muted:#777;--border:#e0e0e0;--card:#fafafa;--accent:#000}
+html.dark{--bg:#0e0e0e;--text:#e8e8e8;--muted:#888;--border:#2a2a2a;--card:#161616;--accent:#fff}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);line-height:1.65;transition:background .3s,color .3s;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Source Serif 4',serif;font-weight:700;color:var(--text);line-height:1.2}
+a{color:var(--text);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--muted)}
+a:hover{text-decoration-color:var(--text)}
+
+/* BG PATTERN */
+.bg-pattern{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-pattern svg{width:100%;height:100%;opacity:.03}
+html.dark .bg-pattern svg{opacity:.05}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem}
+section{padding:3rem 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+section h2{font-size:1.4rem;margin-bottom:1rem}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);transition:background .3s}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.65rem 0;flex-wrap:wrap;gap:.5rem}
+.nav-links{display:flex;gap:1.4rem;list-style:none;font-size:.82rem;font-weight:500}
+.nav-links a{text-decoration:none;color:var(--muted);transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.dark-toggle{background:none;border:1.5px solid var(--border);color:var(--text);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+.dark-toggle:hover{border-color:var(--text)}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;padding:4rem 0 3rem}
+.hero-text h1{font-size:2.3rem;margin-bottom:.5rem}
+.hero-text .sub{font-family:'Source Serif 4',serif;font-style:italic;color:var(--muted);font-size:1.05rem;margin-bottom:1.5rem}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:.3rem 1.5rem;font-size:.84rem;color:var(--muted)}
+.hero-meta strong{color:var(--text);font-weight:600}
+.hero-art{display:flex;align-items:center;justify-content:center}
+.hero-art svg{width:100%;max-width:380px;height:auto}
+
+/* ABOUT — 2 cols */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.about-grid h2{grid-column:1/-1}
+.about-grid p{font-size:.92rem}
+
+/* ARTICLE */
+.art-card{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;border:1px solid var(--border);padding:1.5rem;margin-top:.8rem}
+.art-badge{writing-mode:vertical-rl;text-orientation:mixed;font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;color:var(--muted);white-space:nowrap;align-self:start}
+.art-body h3{font-size:1.05rem;margin-bottom:.4rem}
+.art-body p{font-size:.86rem;color:var(--muted);margin-bottom:.3rem}
+.art-body a{color:var(--text)}
+
+/* CHAPTERS */
+.ch-card{display:grid;grid-template-columns:1fr 280px;gap:2rem;align-items:center;padding:2rem 0;border-bottom:1px solid var(--border)}
+.ch-card:last-child{border-bottom:none}
+.ch-card.reverse{grid-template-columns:280px 1fr}
+.ch-card.reverse .ch-illust{order:0}
+.ch-card.reverse .ch-content{order:1}
+.ch-num{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.2rem}
+.ch-content h3{font-size:1.1rem;margin-bottom:.4rem}
+.ch-content p{font-size:.88rem;color:var(--muted);line-height:1.65}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.tag{font-size:.68rem;padding:.15rem .5rem;border:1px solid var(--border);color:var(--muted);font-weight:500}
+.ch-illust{display:flex;align-items:center;justify-content:center}
+.ch-illust svg{width:100%;max-width:260px;height:auto;color:var(--text)}
+
+/* CITATION */
+.cite-row{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem}
+.cite-block label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--muted);margin-bottom:.4rem}
+.cite-box{background:var(--card);border:1px solid var(--border);padding:1rem;font-family:'Courier New',monospace;font-size:.8rem;line-height:1.55;word-wrap:break-word}
+.copy-row{margin-top:.5rem;display:flex;align-items:center;gap:.8rem}
+.copy-btn{background:var(--text);color:var(--bg);border:none;padding:.35rem .9rem;font-size:.75rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.copy-btn:hover{opacity:.65}
+.copy-ok{font-size:.75rem;color:var(--muted);opacity:0;transition:opacity .3s}
+.copy-ok.show{opacity:1}
+
+/* REFS */
+details summary{cursor:pointer;font-weight:600;font-size:.92rem;padding:.6rem 0;user-select:none}
+.ref-list{column-count:2;column-gap:2rem;padding:0 0 0 1.2rem;font-size:.82rem;line-height:1.7;color:var(--muted)}
+.ref-list li{margin-bottom:.4rem;break-inside:avoid}
+
+/* LINKS & FOOTER */
+.links-row{display:flex;justify-content:center;gap:1.5rem;padding:1.5rem 0;font-size:.88rem;flex-wrap:wrap}
+footer{padding:1.5rem 0;text-align:center;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .hero,.ch-card,.ch-card.reverse{grid-template-columns:1fr;gap:1.2rem}
+    .hero-art{order:-1}
+    .ch-card.reverse .ch-illust{order:-1}
+    .ch-illust{order:-1}
+    .hero h1{font-size:1.7rem}
+    .about-grid{grid-template-columns:1fr}
+    .art-card{grid-template-columns:1fr}.art-badge{writing-mode:horizontal-tb}
+    .cite-row{grid-template-columns:1fr}
+    .ref-list{column-count:1}
+    .ch-illust svg{max-width:220px}
+}
+@media print{nav,.dark-toggle,.bg-pattern,.ch-illust,.hero-art{display:none}section{page-break-inside:avoid}}
+
+/* SVG sketch style */
+.sketch-svg{stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-pattern">
+<svg viewBox="0 0 1400 2800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<pattern id="dots" x="0" y="0" width="70" height="70" patternUnits="userSpaceOnUse"><circle cx="35" cy="35" r="1.2" fill="currentColor"/></pattern>
+<rect width="1400" height="2800" fill="url(#dots)"/>
+<circle cx="200" cy="300" r="160" stroke="currentColor" stroke-width=".7"/>
+<circle cx="200" cy="300" r="100" stroke="currentColor" stroke-width=".5"/>
+<circle cx="200" cy="300" r="45" stroke="currentColor" stroke-width=".4"/>
+<line x1="360" y1="300" x2="550" y2="300" stroke="currentColor" stroke-width=".5"/>
+<circle cx="550" cy="300" r="4" fill="currentColor"/>
+<rect x="950" y="120" width="90" height="90" stroke="currentColor" stroke-width=".6"/>
+<rect x="1060" y="120" width="90" height="90" stroke="currentColor" stroke-width=".6"/>
+<rect x="950" y="230" width="90" height="90" stroke="currentColor" stroke-width=".6"/>
+<rect x="1060" y="230" width="90" height="90" stroke="currentColor" stroke-width=".6"/>
+<polygon points="300,750 350,790 300,830 250,790" stroke="currentColor" stroke-width=".7" fill="none"/>
+<rect x="265" y="860" width="70" height="35" stroke="currentColor" stroke-width=".6" fill="none"/>
+<line x1="300" y1="830" x2="300" y2="860" stroke="currentColor" stroke-width=".5"/>
+<polygon points="880,680 905,645 930,680" stroke="currentColor" stroke-width=".6" fill="none"/>
+<polygon points="940,680 965,645 990,680" stroke="currentColor" stroke-width=".6" fill="none"/>
+<polygon points="1000,680 1025,645 1050,680" stroke="currentColor" stroke-width=".6" fill="none"/>
+<circle cx="1100" cy="950" r="6" stroke="currentColor" stroke-width=".6"/>
+<line x1="1100" y1="956" x2="1060" y2="1000" stroke="currentColor" stroke-width=".4"/>
+<line x1="1100" y1="956" x2="1140" y2="1000" stroke="currentColor" stroke-width=".4"/>
+<circle cx="1060" cy="1005" r="5" stroke="currentColor" stroke-width=".5"/>
+<circle cx="1140" cy="1005" r="5" stroke="currentColor" stroke-width=".5"/>
+<circle cx="180" cy="1150" r="45" stroke="currentColor" stroke-width=".6" fill="none"/>
+<circle cx="180" cy="1150" r="25" stroke="currentColor" stroke-width=".4" fill="none"/>
+<polygon points="700" stroke="currentColor" stroke-width=".5" fill="none"/>
+<line x1="0" y1="550" x2="350" y2="900" stroke="currentColor" stroke-width=".25" stroke-dasharray="8 12"/>
+<line x1="1050" y1="450" x2="1400" y2="800" stroke="currentColor" stroke-width=".25" stroke-dasharray="8 12"/>
+<ellipse cx="400" cy="1400" rx="55" ry="25" stroke="currentColor" stroke-width=".5" fill="none"/>
+<polygon points="455,1400 447,1394 447,1406" fill="currentColor"/>
+</svg>
+</div>
+
+<!-- NAV -->
+<nav>
+<div class="wrap">
+<div class="nav-inner">
+<ul class="nav-links">
+    <li><a href="../">← Portfólio</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#artigo">Artigo</a></li>
+    <li><a href="#taxonomia">Taxonomia</a></li>
+    <li><a href="#capitulos">Capítulos</a></li>
+    <li><a href="#citacao">Citação</a></li>
+    <li><a href="#referencias">Referências</a></li>
+</ul>
+<button class="dark-toggle" id="dt" aria-label="Alternar tema">&#9790;</button>
+</div>
+</div>
+</nav>
+
+<div class="wrap">
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="home" style="border-bottom:1px solid var(--border)">
+<div class="hero-text">
+    <h1>Integrando o Pensamento Computacional ao Currículo</h1>
+    <p class="sub">Formação Docente Baseada no Desenvolvimento de Jogos Digitais</p>
+    <div class="hero-meta">
+        <span><strong>Autor</strong> Carlos Artur de Souza Guimarães</span>
+        <span><strong>Orientador</strong> Prof. Dr. Charles A. G. Madeira</span>
+        <span><strong>Instituição</strong> UFRN · Instituto Metrópole Digital</span>
+        <span><strong>Programa</strong> PPgITE · Mestrado · 2022</span>
+    </div>
+</div>
+<div class="hero-art">
+<!-- HERO: Natal/RN — Ponte Newton Navarro, Rio Potengi, Forte dos Reis Magos, Redinha -->
+<svg viewBox="0 0 400 320" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6">
+  <!-- sky -->
+  <!-- sun -->
+  <circle cx="355" cy="40" r="16" stroke-width="1"/>
+  <line x1="355" y1="18" x2="355" y2="12" stroke-width=".7"/>
+  <line x1="355" y1="62" x2="355" y2="68" stroke-width=".7"/>
+  <line x1="333" y1="40" x2="327" y2="40" stroke-width=".7"/>
+  <line x1="377" y1="40" x2="383" y2="40" stroke-width=".7"/>
+  <line x1="343" y1="28" x2="339" y2="24" stroke-width=".6"/>
+  <line x1="367" y1="52" x2="371" y2="56" stroke-width=".6"/>
+  <!-- bird (garca) -->
+  <path d="M290 55 Q295 48 300 55" stroke-width=".8"/>
+  <path d="M305 50 Q310 43 315 50" stroke-width=".7"/>
+  <!-- PONTE NEWTON NAVARRO — estaiada -->
+  <path d="M30 165 L170 165" stroke-width="2"/><!-- deck left -->
+  <path d="M170 165 L370 175" stroke-width="2"/><!-- deck right -->
+  <!-- tower/pilone -->
+  <line x1="170" y1="165" x2="170" y2="75" stroke-width="2.5"/>
+  <!-- cables left (estais) -->
+  <line x1="170" y1="82" x2="50" y2="165" stroke-width=".7"/>
+  <line x1="170" y1="95" x2="70" y2="165" stroke-width=".7"/>
+  <line x1="170" y1="108" x2="90" y2="165" stroke-width=".7"/>
+  <line x1="170" y1="121" x2="110" y2="165" stroke-width=".7"/>
+  <line x1="170" y1="134" x2="130" y2="165" stroke-width=".7"/>
+  <line x1="170" y1="147" x2="150" y2="165" stroke-width=".7"/>
+  <!-- cables right -->
+  <line x1="170" y1="82" x2="290" y2="172" stroke-width=".7"/>
+  <line x1="170" y1="95" x2="270" y2="171" stroke-width=".7"/>
+  <line x1="170" y1="108" x2="250" y2="170" stroke-width=".7"/>
+  <line x1="170" y1="121" x2="230" y2="169" stroke-width=".7"/>
+  <line x1="170" y1="134" x2="210" y2="168" stroke-width=".7"/>
+  <line x1="170" y1="147" x2="190" y2="167" stroke-width=".7"/>
+  <!-- pillars -->
+  <line x1="60" y1="165" x2="60" y2="195" stroke-width="1.3"/>
+  <line x1="120" y1="165" x2="120" y2="195" stroke-width="1.3"/>
+  <line x1="230" y1="169" x2="230" y2="195" stroke-width="1.3"/>
+  <line x1="320" y1="173" x2="320" y2="195" stroke-width="1.3"/>
+  <!-- RIO POTENGI -->
+  <path d="M0 195 Q100 190 200 195 Q300 200 400 192" stroke-width="1"/>
+  <path d="M0 202 Q120 198 250 203 Q350 207 400 200" stroke-width=".5" stroke-dasharray="5 4"/>
+  <!-- small waves -->
+  <path d="M80 198 Q85 195 90 198" stroke-width=".5"/>
+  <path d="M200 200 Q205 197 210 200" stroke-width=".5"/>
+  <path d="M310 198 Q315 195 320 198" stroke-width=".5"/>
+  <!-- FORTE DOS REIS MAGOS — star fort shape -->
+  <polygon points="28,210 38,206 48,210 48,220 28,220" stroke-width="1.3"/>
+  <polygon points="23,213 28,210 28,220 23,217" stroke-width="1"/>
+  <polygon points="53,213 48,210 48,220 53,217" stroke-width="1"/>
+  <line x1="33" y1="206" x2="33" y2="200" stroke-width=".9"/><!-- flag pole -->
+  <path d="M33 200 L40 202 L33 204" stroke-width=".6" fill="currentColor"/><!-- flag -->
+  <!-- REDINHA coast right -->
+  <path d="M280 210 Q320 205 370 210 Q390 212 400 210" stroke-width="1"/>
+  <!-- coqueiro at Redinha -->
+  <path d="M350 210 Q352 185 348 160" stroke-width="1.8"/>
+  <path d="M348 160 Q335 150 330 154" stroke-width="1.1"/>
+  <path d="M348 160 Q355 148 362 152" stroke-width="1.1"/>
+  <path d="M348 160 Q340 145 333 144" stroke-width="1.1"/>
+  <path d="M348 160 Q360 150 365 158" stroke-width="1"/>
+  <circle cx="346" cy="162" r="3" stroke-width=".9"/>
+  <!-- jangada on Potengi -->
+  <path d="M240 192 L260 192 L263 196 L237 196Z" stroke-width="1"/>
+  <line x1="250" y1="192" x2="250" y2="175" stroke-width=".8"/>
+  <path d="M250 175 L262 185 L250 192" stroke-width=".7"/>
+  <!-- CHILD sitting at Redinha beach with laptop -->
+  <circle cx="310" cy="230" r="11" stroke-width="1.5"/>
+  <!-- curly hair -->
+  <path d="M300 224 Q297 217 302 215 Q307 213 312 215 Q317 213 320 217 Q322 224" stroke-width="1"/>
+  <circle cx="307" cy="229" r="1.2" fill="currentColor"/>
+  <circle cx="314" cy="229" r="1.2" fill="currentColor"/>
+  <path d="M308 234 Q311 237 314 234" stroke-width=".8"/>
+  <line x1="310" y1="241" x2="310" y2="265" stroke-width="1.4"/>
+  <path d="M310 250 Q298 255 293 260" stroke-width="1.2"/>
+  <path d="M310 250 Q322 255 327 260" stroke-width="1.2"/>
+  <path d="M310 265 Q303 272 298 278" stroke-width="1.3"/>
+  <path d="M310 265 Q317 272 322 278" stroke-width="1.3"/>
+  <!-- laptop -->
+  <rect x="290" y="262" width="40" height="4" rx="1" stroke-width="1"/>
+  <path d="M294 262 L297 248 L323 248 L326 262" stroke-width="1.1"/>
+  <line x1="301" y1="253" x2="315" y2="253" stroke-width=".5"/>
+  <line x1="302" y1="256" x2="318" y2="256" stroke-width=".5"/>
+  <!-- TEACHER standing near bridge, pointing -->
+  <circle cx="100" cy="230" r="12" stroke-width="1.5"/>
+  <circle cx="100" cy="216" r="7" stroke-width=".9"/><!-- bun -->
+  <circle cx="97" cy="229" r="1.2" fill="currentColor"/>
+  <circle cx="104" cy="229" r="1.2" fill="currentColor"/>
+  <path d="M97 234 Q100 237 103 234" stroke-width=".8"/>
+  <line x1="100" y1="242" x2="100" y2="275" stroke-width="1.5"/>
+  <path d="M100 252 Q85 258 80 262" stroke-width="1.2"/>
+  <path d="M100 252 Q115 245 125 240" stroke-width="1.2"/><!-- pointing at bridge -->
+  <line x1="100" y1="275" x2="92" y2="298" stroke-width="1.3"/>
+  <line x1="100" y1="275" x2="108" y2="298" stroke-width="1.3"/>
+  <!-- child 2 next to teacher -->
+  <circle cx="140" cy="240" r="9" stroke-width="1.3"/>
+  <path d="M132 236 Q131 230 136 228 Q141 227 145 229 Q148 232 148 236" stroke-width=".9"/>
+  <circle cx="137" cy="239" r="1" fill="currentColor"/>
+  <circle cx="143" cy="239" r="1" fill="currentColor"/>
+  <line x1="140" y1="249" x2="140" y2="272" stroke-width="1.2"/>
+  <path d="M140 257 Q130 262 126 266" stroke-width="1"/>
+  <path d="M140 257 Q150 262 154 266" stroke-width="1"/>
+  <line x1="140" y1="272" x2="134" y2="292" stroke-width="1.1"/>
+  <line x1="140" y1="272" x2="146" y2="292" stroke-width="1.1"/>
+  <!-- sand/ground -->
+  <path d="M0 285 Q50 278 100 283 Q150 288 200 282 Q260 276 320 280 Q370 284 400 278" stroke-width=".8"/>
+  <!-- cactus mandacaru small (flora RN) -->
+  <line x1="210" y1="282" x2="210" y2="260" stroke-width="1.3"/>
+  <path d="M210 270 Q202 265 200 258" stroke-width="1"/>
+  <path d="M210 268 Q218 263 220 256" stroke-width="1"/>
+  <!-- thought bubble -->
+  <circle cx="340" cy="218" r="14" stroke-width=".7" stroke-dasharray="2.5 2"/>
+  <path d="M335 214 L339 218 L335 222" stroke-width=".6"/><!-- code bracket -->
+  <circle cx="345" cy="216" r="3" stroke-width=".5"/><!-- gear -->
+  <line x1="345" y1="212" x2="345" y2="220" stroke-width=".3"/>
+</svg>
+</div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section id="sobre">
+<div class="about-grid">
+    <h2>Sobre a Pesquisa</h2>
+    <div>
+        <p>Esta dissertação investiga como a criação de jogos digitais pode funcionar como vetor de formação docente em Pensamento Computacional (PC), articulando uma rede de colaboração entre universidade, secretaria de educação e escolas públicas do Rio Grande do Norte. O trabalho fundamenta-se no construcionismo de Seymour Papert e no modelo TPACK (Technological Pedagogical Content Knowledge) de Mishra e Koehler, demonstrando que quando professores projetam e implementam soluções educacionais autênticas — como jogos no Scratch — desenvolvem competências integradas que transcendem a mera transferência técnica.</p>
+        <p>Através de uma abordagem Design Science Research (DSR) com métodos mistos quali-quantitativos, a pesquisa analisa a implementação do Programa PENSA-RN: um curso de 60 horas em 5 módulos EaD que capacitou 225 educadores dos anos finais do Ensino Fundamental. A pesquisa também produz a Estrutura Taxonômica Integrada (PC × Bloom × Jogos), um modelo que articula competências do PC com níveis cognitivos de Bloom e complexidade de design de jogos educacionais.</p>
+    </div>
+    <div>
+        <p>Os resultados revelam um fenômeno crítico: dos 225 inscritos, 155 não acessaram a plataforma na primeira semana ("evasão silenciosa"). Através de um ecossistema de alto suporte humano — WhatsApp, webinars síncronos, tutoria ativa e comunicação proativa — os não-acessos caíram para 68 em três semanas (queda de 56%). O "núcleo resiliente" que permaneceu demonstrou aprofundamento conceitual crescente.</p>
+        <p>Esse grupo produziu artefatos de qualidade excepcional: jogos complexos no Scratch com planos de aula maduros integrando os quatro pilares do PC a componentes como Matemática, Ciências e Língua Portuguesa. A conclusão central: o sucesso da formação docente em PC reside não apenas no conteúdo, mas fundamentalmente no suporte humano, na mediação socioafetiva e na estruturação de comunidades de prática permanentes. As recomendações apontam para a urgência de financiamento contínuo para jornadas formativas extensas e infraestrutura mínima nas escolas.</p>
+    </div>
+</div>
+</section>
+
+<!-- ═══════════════════ ARTIGO ═══════════════════ -->
+<section id="artigo">
+<h2>Publicação Derivada</h2>
+<p style="font-size:.9rem;color:var(--muted);margin-bottom:.5rem">A pesquisa deu origem a um artigo na RBIE — principal periódico de Informática na Educação no Brasil (Qualis A2/CAPES).</p>
+<div class="art-card">
+    <div class="art-badge">RBIE · 2021 · EduComp</div>
+    <div class="art-body">
+        <h3>Capacitando Professores no Programa Norte-rio-grandense de Pensamento Computacional</h3>
+        <p><strong>Autores:</strong> Jeanne da S. B. Bulcão, Charles A. G. Madeira, Carlos A. S. Guimarães, Crisiany A. de Sousa</p>
+        <p><strong>Periódico:</strong> Revista Brasileira de Informática na Educação, v. 29, p. 1178–1201, 2021</p>
+        <p><strong>DOI:</strong> <a href="https://doi.org/10.5753/rbie.2021.2120" target="_blank">10.5753/rbie.2021.2120</a></p>
+        <p><strong>Palavras-chave:</strong> Formação Continuada · Ensino Fundamental · Pensamento Computacional · Metodologias Ativas</p>
+        <p style="margin-top:.5rem;color:var(--text)">O artigo relata a experiência do curso de formação continuada do PENSA-RN com 225 professores dos anos finais do Ensino Fundamental, unindo aprendizagem baseada em resolução de problemas, computação desplugada, jogos digitais e programação visual com Scratch. A pesquisa documenta como o curso combateu a evasão silenciosa (155 não-acessos iniciais) através de um ecossistema de suporte humano — WhatsApp, webinars síncronos, tutoria ativa — reduzindo os não-acessos em 56% em três semanas. Os professores do núcleo resiliente adotaram novas estratégias pedagógicas, elaborando e aplicando práticas educativas integradas ao PC em escolas públicas do RN.</p>
+    </div>
+</div>
+</section>
+
+<!-- ═══════════════════ TAXONOMIA ═══════════════════ -->
+<section id="taxonomia">
+<h2>Produto Técnico: Taxonomia PC × Bloom × Jogos</h2>
+<div class="about-grid">
+    <div>
+        <p>A dissertação produziu um modelo conceitual original — a <strong>Estrutura Taxonômica Integrada</strong> — que articula as competências do Pensamento Computacional, os níveis cognitivos da Taxonomia de Bloom e a complexidade do design de jogos educacionais. O modelo funciona como um "funil de design" que guia o professor-autor em quatro etapas progressivas:</p>
+        <p><strong>1. Base — Habilidade da BNCC:</strong> O ponto de partida é estritamente curricular. O professor identifica qual habilidade ou conteúdo da BNCC deseja que os estudantes desenvolvam.</p>
+        <p><strong>2. Níveis — Taxonomia de Bloom:</strong> O professor analisa o verbo-chave da habilidade (classificar, construir, avaliar) e o mapeia nos seis níveis cognitivos: Lembrar, Entender, Aplicar, Analisar, Avaliar e Criar. Isso define a profundidade da aprendizagem esperada.</p>
+    </div>
+    <div>
+        <p><strong>3. Pilares do PC — Ferramentas Mentais:</strong> Os fundamentos do PC atuam como o "como" da construção: a Decomposição estrutura as fases do jogo, o Reconhecimento de Padrões inspira regras e mecânicas, a Abstração define elementos essenciais, e os Algoritmos estruturam a lógica de programação.</p>
+        <p><strong>4. Produto — O Jogo Educacional:</strong> O resultado final é o artefato digital, cuja mecânica reflete o nível cognitivo de Bloom, o conteúdo da BNCC e as diretrizes do eixo de Computação.</p>
+        <p><strong>Exemplo prático:</strong> Se a habilidade exigir o nível "Criar", o aluno elabora o algoritmo de movimento de um personagem — planejando a sequência lógica de blocos no Scratch (andar, pular, coletar moedas, reagir a obstáculos) — integrando tecnologia, pedagogia e conteúdo de forma simultânea.</p>
+    </div>
+</div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULOS ═══════════════════ -->
+<section id="capitulos">
+<h2>Estrutura da Dissertação</h2>
+
+<!-- ── CH1: Introdução — Sala de aula com janela mostrando Natal, BNCC, sociedade digital ── -->
+<div class="ch-card">
+<div class="ch-content">
+    <div class="ch-num">Capítulo 1</div>
+    <h3>Introdução</h3>
+    <p>Contextualiza o impacto da sociedade digital e a emergência do Pensamento Computacional (PC) como competência transversal do século XXI. Delimita o problema de pesquisa focando no hiato crítico entre as diretrizes da Base Nacional Comum Curricular (BNCC) — que desde 2017 prevê a integração do PC na Educação Básica — e a insuficiência de formação docente eficaz para implementá-las. O capítulo justifica o uso de jogos digitais como estratégia pedagógica construcionista para capacitar educadores, transformando-os de consumidores a autores de soluções didáticas. Apresenta as questões de pesquisa, objetivos geral e específicos, e fundamenta o PENSA-RN como resposta institucional a essa lacuna formativa.</p>
+    <div class="tags"><span class="tag">Sociedade Digital</span><span class="tag">BNCC</span><span class="tag">Formação Docente</span><span class="tag">Construcionismo</span></div>
+</div>
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- classroom window showing Natal skyline -->
+  <rect x="15" y="15" width="110" height="75" stroke-width="1.2"/>
+  <line x1="70" y1="15" x2="70" y2="90" stroke-width=".6"/>
+  <line x1="15" y1="52" x2="125" y2="52" stroke-width=".6"/>
+  <!-- Ponte Newton Navarro in window -->
+  <line x1="25" y1="48" x2="115" y2="48" stroke-width="1"/>
+  <line x1="65" y1="48" x2="65" y2="28" stroke-width="1.2"/>
+  <line x1="65" y1="30" x2="35" y2="48" stroke-width=".5"/>
+  <line x1="65" y1="30" x2="95" y2="48" stroke-width=".5"/>
+  <line x1="65" y1="36" x2="45" y2="48" stroke-width=".5"/>
+  <line x1="65" y1="36" x2="85" y2="48" stroke-width=".5"/>
+  <!-- coqueiro in window -->
+  <path d="M105 48 Q107 38 104 25" stroke-width=".9"/>
+  <path d="M104 25 Q98 20 96 23" stroke-width=".6"/>
+  <path d="M104 25 Q108 18 112 20" stroke-width=".6"/>
+  <!-- teacher at blackboard -->
+  <circle cx="180" cy="52" r="11" stroke-width="1.4"/>
+  <circle cx="180" cy="40" r="6" stroke-width=".8"/><!-- bun -->
+  <circle cx="177" cy="51" r="1" fill="currentColor"/>
+  <circle cx="183" cy="51" r="1" fill="currentColor"/>
+  <path d="M178 56 Q180 58 183 56" stroke-width=".7"/>
+  <line x1="180" y1="63" x2="180" y2="95" stroke-width="1.3"/>
+  <path d="M180 73 Q168 78 162 82" stroke-width="1.1"/>
+  <path d="M180 73 Q192 68 200 63" stroke-width="1.1"/>
+  <line x1="180" y1="95" x2="173" y2="115" stroke-width="1.2"/>
+  <line x1="180" y1="95" x2="187" y2="115" stroke-width="1.2"/>
+  <!-- blackboard -->
+  <rect x="200" y="30" width="65" height="45" stroke-width="1.2"/>
+  <text x="210" y="50" font-size="7" fill="currentColor" stroke="none" font-weight="600">BNCC</text>
+  <text x="210" y="62" font-size="5.5" fill="currentColor" stroke="none">Computação</text>
+  <line x1="208" y1="67" x2="255" y2="67" stroke-width=".4"/>
+  <!-- students at desks -->
+  <!-- child 1 — curly hair -->
+  <circle cx="70" cy="145" r="9"/>
+  <path d="M62 140 Q60 134 65 132 Q70 130 75 132 Q80 134 78 140" stroke-width=".9"/>
+  <circle cx="67" cy="144" r="1" fill="currentColor"/>
+  <circle cx="73" cy="144" r="1" fill="currentColor"/>
+  <line x1="70" y1="154" x2="70" y2="175" stroke-width="1.2"/>
+  <path d="M70 162 Q60 167 55 170" stroke-width="1"/>
+  <path d="M70 162 Q80 167 85 170" stroke-width="1"/>
+  <!-- desk -->
+  <rect x="50" y="172" width="40" height="4" stroke-width=".9"/>
+  <line x1="55" y1="176" x2="53" y2="195" stroke-width=".7"/>
+  <line x1="85" y1="176" x2="87" y2="195" stroke-width=".7"/>
+  <!-- child 2 — braids -->
+  <circle cx="150" cy="145" r="9"/>
+  <path d="M142 141 L139 160" stroke-width=".7"/>
+  <path d="M158 141 L161 160" stroke-width=".7"/>
+  <circle cx="147" cy="144" r="1" fill="currentColor"/>
+  <circle cx="153" cy="144" r="1" fill="currentColor"/>
+  <line x1="150" y1="154" x2="150" y2="175" stroke-width="1.2"/>
+  <path d="M150 162 Q140 167 135 170" stroke-width="1"/>
+  <path d="M150 162 Q160 167 165 170" stroke-width="1"/>
+  <rect x="130" y="172" width="40" height="4" stroke-width=".9"/>
+  <line x1="135" y1="176" x2="133" y2="195" stroke-width=".7"/>
+  <line x1="165" y1="176" x2="167" y2="195" stroke-width=".7"/>
+  <!-- child 3 — short hair, at laptop -->
+  <circle cx="230" cy="145" r="9"/>
+  <path d="M222 140 Q221 133 227 131 Q233 131 237 133 Q238 140" stroke-width=".9"/>
+  <circle cx="227" cy="144" r="1" fill="currentColor"/>
+  <circle cx="233" cy="144" r="1" fill="currentColor"/>
+  <line x1="230" y1="154" x2="230" y2="175" stroke-width="1.2"/>
+  <path d="M230 162 Q220 167 215 170" stroke-width="1"/>
+  <path d="M230 162 Q240 167 245 170" stroke-width="1"/>
+  <rect x="210" y="172" width="40" height="4" stroke-width=".9"/>
+  <!-- laptop on desk -->
+  <path d="M218 172 L220 164 L240 164 L242 172" stroke-width=".8"/>
+  <!-- wifi floating -->
+  <path d="M250 120 Q256 113 262 120" stroke-width=".7"/>
+  <path d="M247 124 Q256 113 265 124" stroke-width=".6"/>
+  <circle cx="256" cy="122" r="1.5" fill="currentColor"/>
+  <!-- globe small -->
+  <circle cx="38" cy="120" r="10" stroke-width=".7"/>
+  <ellipse cx="38" cy="120" rx="4.5" ry="10" stroke-width=".4"/>
+  <line x1="28" y1="120" x2="48" y2="120" stroke-width=".3"/>
+  <!-- mandacaru (flora) -->
+  <line x1="268" y1="220" x2="268" y2="200" stroke-width="1"/>
+  <path d="M268 208 Q262 204 260 197" stroke-width=".8"/>
+  <path d="M268 206 Q274 202 276 195" stroke-width=".8"/>
+</svg>
+</div>
+</div>
+
+<!-- ── CH2: Fundamentação — Papert/Wing, TPACK, crianças construindo, fauna RN ── -->
+<div class="ch-card reverse">
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- TPACK venn diagram -->
+  <circle cx="140" cy="48" r="22" stroke-width=".9"/>
+  <circle cx="124" cy="68" r="22" stroke-width=".9"/>
+  <circle cx="156" cy="68" r="22" stroke-width=".9"/>
+  <text x="133" y="38" font-size="7.5" fill="currentColor" stroke="none" font-weight="700">T</text>
+  <text x="109" y="78" font-size="7.5" fill="currentColor" stroke="none" font-weight="700">P</text>
+  <text x="159" y="78" font-size="7.5" fill="currentColor" stroke="none" font-weight="700">C</text>
+  <!-- child 1 — afro hair building blocks (constructionism) -->
+  <circle cx="65" cy="125" r="11"/>
+  <circle cx="65" cy="119" r="15" stroke-width=".8" stroke-dasharray="2 1.5"/><!-- afro -->
+  <circle cx="62" cy="124" r="1.1" fill="currentColor"/>
+  <circle cx="69" cy="124" r="1.1" fill="currentColor"/>
+  <path d="M63 129 Q65 131 68 129" stroke-width=".7"/>
+  <line x1="65" y1="136" x2="65" y2="162" stroke-width="1.3"/>
+  <path d="M65 145 Q53 150 48 155" stroke-width="1.1"/>
+  <path d="M65 145 Q77 150 82 155" stroke-width="1.1"/>
+  <line x1="65" y1="162" x2="58" y2="180" stroke-width="1.2"/>
+  <line x1="65" y1="162" x2="72" y2="180" stroke-width="1.2"/>
+  <!-- blocks -->
+  <rect x="38" y="152" width="14" height="11" stroke-width=".9"/>
+  <rect x="52" y="152" width="14" height="11" stroke-width=".9"/>
+  <rect x="45" y="141" width="14" height="11" stroke-width=".9"/>
+  <!-- child 2 — ponytail at laptop with Scratch -->
+  <circle cx="190" cy="125" r="11"/>
+  <path d="M201 122 Q208 119 212 124 Q213 131 207 133" stroke-width="1"/><!-- ponytail -->
+  <circle cx="186" cy="124" r="1.1" fill="currentColor"/>
+  <circle cx="193" cy="124" r="1.1" fill="currentColor"/>
+  <path d="M188 129 Q190 131 193 129" stroke-width=".7"/>
+  <line x1="190" y1="136" x2="190" y2="162" stroke-width="1.3"/>
+  <path d="M190 145 Q178 150 173 155" stroke-width="1.1"/>
+  <path d="M190 145 Q202 150 207 155" stroke-width="1.1"/>
+  <!-- desk+laptop -->
+  <line x1="155" y1="165" x2="225" y2="165" stroke-width="1.2"/>
+  <path d="M172 165 L175 150 L205 150 L208 165" stroke-width="1"/>
+  <!-- Scratch cat on screen -->
+  <circle cx="190" cy="156" r="4.5" stroke-width=".7"/>
+  <path d="M186 152 L184 148" stroke-width=".6"/>
+  <path d="M194 152 L196 148" stroke-width=".6"/>
+  <!-- Papert arrow → Wing timeline -->
+  <line x1="20" y1="210" x2="260" y2="210" stroke-width=".8"/>
+  <polygon points="260,210 255,207 255,213" fill="currentColor" stroke="none"/>
+  <text x="20" y="207" font-size="6" fill="currentColor" stroke="none">Papert 1980</text>
+  <text x="120" y="207" font-size="6" fill="currentColor" stroke="none">Wing 2006</text>
+  <text x="215" y="207" font-size="6" fill="currentColor" stroke="none">BNCC 2017</text>
+  <circle cx="45" cy="210" r="2.5" fill="currentColor"/>
+  <circle cx="145" cy="210" r="2.5" fill="currentColor"/>
+  <circle cx="240" cy="210" r="2.5" fill="currentColor"/>
+  <!-- garca (bird - fauna RN) -->
+  <path d="M240 105 Q245 98 250 105" stroke-width=".8"/>
+  <path d="M252 100 Q257 93 262 100" stroke-width=".7"/>
+  <!-- calango (lizard hint) -->
+  <path d="M12 195 Q18 192 25 194 Q30 196 35 194" stroke-width=".7"/>
+  <circle cx="12" cy="195" r="1.5" fill="currentColor"/>
+  <line x1="18" y1="192" x2="16" y2="188" stroke-width=".5"/>
+  <line x1="25" y1="196" x2="23" y2="200" stroke-width=".5"/>
+</svg>
+</div>
+<div class="ch-content">
+    <div class="ch-num">Capítulo 2</div>
+    <h3>Fundamentação Teórica</h3>
+    <p>Explora a evolução do Pensamento Computacional desde o construcionismo de Seymour Papert até a sua universalização por Jeannette Wing, aprofundando os quatro pilares: abstração, decomposição, reconhecimento de padrões e algoritmos. Fundamenta o uso de jogos digitais como recurso engajador de aprendizagem e introduz o modelo TPACK (Technological Pedagogical Content Knowledge) como framework essencial para integrar tecnologia, pedagogia e conteúdo na formação docente. O capítulo também desenvolve uma crítica importante à visão puramente tecnicista de preparação exclusiva para o mercado, defendendo que o PC deve ser entendido como ferramenta de empoderamento cognitivo e cidadania digital — não apenas como habilidade técnica para empregabilidade.</p>
+    <div class="tags"><span class="tag">Construcionismo</span><span class="tag">Papert</span><span class="tag">Wing</span><span class="tag">TPACK</span><span class="tag">Jogos Digitais</span><span class="tag">Cidadania Digital</span></div>
+</div>
+</div>
+
+<!-- ── CH3: RSL — Criança pesquisadora, funil PRISMA, livros, flora caatinga ── -->
+<div class="ch-card">
+<div class="ch-content">
+    <div class="ch-num">Capítulo 3</div>
+    <h3>Revisão Sistemática da Literatura</h3>
+    <p>Mapeia o estado da arte sobre formação de professores em PC via jogos digitais, utilizando os protocolos Kitchenham (2004) e PRISMA (Moher et al., 2009). Os achados revelam a prevalência de ferramentas como Scratch e Snap!, e de metodologias como a Aprendizagem Baseada em Problemas (PBL). Estudos revisados apontam impactos positivos no engajamento e nas habilidades TPACK dos professores — incluindo aumento de confiança e mudança de postura frente à tecnologia —, mas ressaltam desafios como a falta de conhecimento técnico prévio dos docentes, severas limitações de infraestrutura nas escolas, e tempo curricular insuficiente. A RSL também evidencia carência de estudos longitudinais e de instrumentos de avaliação padronizados, dificultando comparações robustas entre pesquisas.</p>
+    <div class="tags"><span class="tag">Kitchenham</span><span class="tag">PRISMA</span><span class="tag">Scratch</span><span class="tag">PBL</span><span class="tag">Lacunas</span></div>
+</div>
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- child with magnifying glass -->
+  <circle cx="75" cy="95" r="11"/>
+  <path d="M65 90 Q63 83 68 80 Q75 78 80 80 Q85 83 84 90" stroke-width="1"/>
+  <circle cx="72" cy="94" r="1.1" fill="currentColor"/>
+  <circle cx="79" cy="94" r="1.1" fill="currentColor"/>
+  <path d="M73 99 Q75 101 78 99" stroke-width=".7"/>
+  <line x1="75" y1="106" x2="75" y2="138" stroke-width="1.3"/>
+  <path d="M75 116 Q88 112 100 105" stroke-width="1.1"/>
+  <circle cx="112" cy="96" r="13" stroke-width="1.2"/><!-- lens -->
+  <line x1="103" y1="105" x2="94" y2="116" stroke-width="1.4"/><!-- handle -->
+  <path d="M75 116 Q62 122 55 128" stroke-width="1.1"/>
+  <line x1="75" y1="138" x2="68" y2="158" stroke-width="1.2"/>
+  <line x1="75" y1="138" x2="82" y2="158" stroke-width="1.2"/>
+  <!-- books -->
+  <rect x="38" y="128" width="25" height="5" rx="1" stroke-width=".9"/>
+  <rect x="40" y="123" width="23" height="5" rx="1" stroke-width=".8"/>
+  <rect x="39" y="118" width="24" height="5" rx="1" stroke-width=".7"/>
+  <!-- PRISMA funnel -->
+  <rect x="165" y="30" width="90" height="20" stroke-width="1"/>
+  <text x="185" y="44" font-size="7.5" fill="currentColor" stroke="none">2.847</text>
+  <line x1="175" y1="50" x2="245" y2="50" stroke-width=".4"/>
+  <line x1="175" y1="50" x2="185" y2="72" stroke-width=".7"/>
+  <line x1="245" y1="50" x2="235" y2="72" stroke-width=".7"/>
+  <rect x="185" y="72" width="50" height="18" stroke-width=".9"/>
+  <text x="198" y="85" font-size="7" fill="currentColor" stroke="none">384</text>
+  <line x1="192" y1="90" x2="228" y2="90" stroke-width=".4"/>
+  <line x1="192" y1="90" x2="198" y2="110" stroke-width=".7"/>
+  <line x1="228" y1="90" x2="222" y2="110" stroke-width=".7"/>
+  <rect x="198" y="110" width="24" height="16" stroke-width=".8"/>
+  <text x="204" y="122" font-size="7" fill="currentColor" stroke="none">42</text>
+  <!-- checkmarks -->
+  <path d="M155 70 L159 76 L167 66" stroke-width="1.1"/>
+  <path d="M155 95 L159 101 L167 91" stroke-width="1.1"/>
+  <path d="M155 117 L159 123 L167 113" stroke-width="1.1"/>
+  <!-- X marks (excluded) -->
+  <path d="M244 58 L250 64 M250 58 L244 64" stroke-width=".7"/>
+  <path d="M240 80 L246 86 M246 80 L240 86" stroke-width=".6"/>
+  <!-- macambira (bromeliad - caatinga flora) -->
+  <path d="M25 210 Q30 195 25 185" stroke-width=".9"/>
+  <path d="M25 195 Q18 188 15 180" stroke-width=".7"/>
+  <path d="M25 195 Q32 186 35 178" stroke-width=".7"/>
+  <path d="M25 200 Q20 194 17 190" stroke-width=".6"/>
+  <path d="M25 200 Q30 192 34 187" stroke-width=".6"/>
+  <!-- teacher reviewing at desk -->
+  <circle cx="210" cy="168" r="10"/>
+  <circle cx="210" cy="156" r="6" stroke-width=".8"/><!-- bun -->
+  <circle cx="207" cy="167" r="1" fill="currentColor"/>
+  <circle cx="213" cy="167" r="1" fill="currentColor"/>
+  <line x1="210" y1="178" x2="210" y2="205" stroke-width="1.2"/>
+  <path d="M210 186 Q198 192 193 196" stroke-width="1"/>
+  <path d="M210 186 Q222 192 227 196" stroke-width="1"/>
+  <!-- desk with papers -->
+  <line x1="185" y1="202" x2="240" y2="202" stroke-width="1"/>
+  <rect x="190" y="195" width="12" height="7" stroke-width=".6"/>
+  <rect x="205" y="194" width="12" height="8" stroke-width=".6"/>
+  <rect x="220" y="195" width="12" height="7" stroke-width=".6"/>
+</svg>
+</div>
+</div>
+
+<!-- ── CH4: Metodologia — Pico do Tororó/Currais Novos, DSR ciclo, crianças em roda ── -->
+<div class="ch-card reverse">
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- PICO DO TORORÓ — rocky peak landscape, Currais Novos -->
+  <path d="M0 90 Q30 88 60 85 Q90 70 110 40 Q120 28 130 40 Q140 55 160 70 Q190 85 220 82 Q250 80 280 85" stroke-width="1.5"/>
+  <!-- rock texture lines -->
+  <path d="M95 60 Q105 50 115 60" stroke-width=".5"/>
+  <path d="M108 45 Q115 38 122 45" stroke-width=".4"/>
+  <path d="M75 75 L85 68" stroke-width=".4"/>
+  <path d="M155 65 L165 60" stroke-width=".4"/>
+  <!-- caatinga vegetation at base -->
+  <line x1="30" y1="88" x2="30" y2="75" stroke-width=".8"/>
+  <path d="M30 78 Q25 73 23 68" stroke-width=".6"/>
+  <path d="M30 76 Q35 71 37 66" stroke-width=".6"/>
+  <line x1="230" y1="82" x2="230" y2="68" stroke-width=".8"/>
+  <path d="M230 72 Q225 67 223 62" stroke-width=".6"/>
+  <path d="M230 70 Q235 65 238 60" stroke-width=".6"/>
+  <!-- xique-xique cactus -->
+  <line x1="200" y1="82" x2="200" y2="65" stroke-width="1"/>
+  <path d="M200 72 Q193 68 190 62" stroke-width=".7"/>
+  <path d="M200 70 Q207 66 210 60" stroke-width=".7"/>
+  <circle cx="200" cy="63" r="1.5" stroke-width=".5"/>
+  <!-- DSR cycle on whiteboard -->
+  <rect x="20" y="105" width="100" height="60" stroke-width="1.1"/>
+  <circle cx="70" cy="133" r="20" stroke-width=".7" stroke-dasharray="3 2.5"/>
+  <text x="55" y="122" font-size="5.5" fill="currentColor" stroke="none">Identificar</text>
+  <text x="77" y="137" font-size="5.5" fill="currentColor" stroke="none">Projetar</text>
+  <text x="53" y="150" font-size="5.5" fill="currentColor" stroke="none">Avaliar</text>
+  <path d="M82 118 Q93 126 86 138" stroke-width=".6"/>
+  <polygon points="86,138 89,134 84,135" fill="currentColor" stroke="none"/>
+  <path d="M84 148 Q70 156 58 145" stroke-width=".6"/>
+  <polygon points="58,145 61,149 56,148" fill="currentColor" stroke="none"/>
+  <path d="M56 124 Q63 113 78 117" stroke-width=".6"/>
+  <polygon points="78,117 74,115 75,120" fill="currentColor" stroke="none"/>
+  <!-- three children in semicircle -->
+  <!-- child 1 -->
+  <circle cx="155" cy="130" r="9"/>
+  <path d="M147 126 Q146 120 151 118 Q155 117 160 119 Q163 122 162 126" stroke-width=".8"/>
+  <circle cx="152" cy="129" r=".9" fill="currentColor"/>
+  <circle cx="158" cy="129" r=".9" fill="currentColor"/>
+  <line x1="155" y1="139" x2="155" y2="160" stroke-width="1.2"/>
+  <path d="M155 147 Q145 152 140 155" stroke-width="1"/>
+  <path d="M155 147 Q165 152 170 155" stroke-width="1"/>
+  <line x1="155" y1="160" x2="149" y2="177" stroke-width="1.1"/>
+  <line x1="155" y1="160" x2="161" y2="177" stroke-width="1.1"/>
+  <!-- notepad -->
+  <rect x="138" y="153" width="10" height="13" stroke-width=".7"/>
+  <line x1="140" y1="157" x2="146" y2="157" stroke-width=".3"/>
+  <line x1="140" y1="160" x2="146" y2="160" stroke-width=".3"/>
+  <!-- child 2 — braids -->
+  <circle cx="205" cy="125" r="9"/>
+  <path d="M197 121 L194 140" stroke-width=".7"/>
+  <path d="M213 121 L216 140" stroke-width=".7"/>
+  <circle cx="202" cy="124" r=".9" fill="currentColor"/>
+  <circle cx="208" cy="124" r=".9" fill="currentColor"/>
+  <line x1="205" y1="134" x2="205" y2="157" stroke-width="1.2"/>
+  <path d="M205 142 Q195 147 190 150" stroke-width="1"/>
+  <path d="M205 142 Q215 147 220 150" stroke-width="1"/>
+  <line x1="205" y1="157" x2="199" y2="175" stroke-width="1.1"/>
+  <line x1="205" y1="157" x2="211" y2="175" stroke-width="1.1"/>
+  <!-- child 3 -->
+  <circle cx="250" cy="130" r="9"/>
+  <path d="M242 126 Q241 119 247 117 Q253 117 257 119 Q258 126" stroke-width=".8"/>
+  <circle cx="247" cy="129" r=".9" fill="currentColor"/>
+  <circle cx="253" cy="129" r=".9" fill="currentColor"/>
+  <line x1="250" y1="139" x2="250" y2="160" stroke-width="1.2"/>
+  <path d="M250 147 Q240 152 235 155" stroke-width="1"/>
+  <path d="M250 147 Q260 152 265 155" stroke-width="1"/>
+  <line x1="250" y1="160" x2="244" y2="177" stroke-width="1.1"/>
+  <line x1="250" y1="160" x2="256" y2="177" stroke-width="1.1"/>
+  <!-- bar chart floating -->
+  <rect x="238" y="152" width="18" height="14" stroke-width=".6"/>
+  <rect x="240" y="160" width="3.5" height="6" fill="currentColor" stroke="none"/>
+  <rect x="245" y="156" width="3.5" height="10" fill="currentColor" stroke="none"/>
+  <rect x="250" y="158" width="3.5" height="8" fill="currentColor" stroke="none"/>
+  <!-- asa branca (bird - iconic RN/NE fauna) -->
+  <path d="M45 30 Q52 22 58 30" stroke-width=".9"/>
+  <path d="M62 25 Q68 18 74 25" stroke-width=".8"/>
+  <!-- ground -->
+  <path d="M0 195 Q70 190 140 195 Q210 200 280 192" stroke-width=".6"/>
+</svg>
+</div>
+<div class="ch-content">
+    <div class="ch-num">Capítulo 4</div>
+    <h3>Metodologia</h3>
+    <p>Descreve a utilização da abordagem Design Science Research (DSR) segundo Hevner et al. (2004) e Peffers et al. (2007), focada na criação e refinamento iterativo de um artefato educacional. A pesquisa empregou métodos mistos quali-quantitativos: dados automáticos extraídos do Moodle (acessos, entregas, engajamento), questionários pré e pós-teste para mensurar evolução conceitual, e avaliação das produções dos cursistas através de rubricas baseadas no modelo TPACK para medir o desenvolvimento integrado de competências tecnológicas, pedagógicas e de conteúdo. A natureza iterativa do DSR permitiu que o curso fosse adaptado em tempo real com base nos dados coletados a cada módulo.</p>
+    <div class="tags"><span class="tag">DSR</span><span class="tag">Métodos Mistos</span><span class="tag">Moodle</span><span class="tag">Rubricas TPACK</span><span class="tag">Iterativo</span></div>
+</div>
+</div>
+
+<!-- ── CH5: PENSA-RN — Lab de informática, professor+alunos, Scratch, 5 módulos ── -->
+<div class="ch-card">
+<div class="ch-content">
+    <div class="ch-num">Capítulo 5</div>
+    <h3>O PENSA-RN e o Artefato Educacional</h3>
+    <p>Apresenta o cenário institucional da pesquisa: o Programa Norte-rio-grandense de Pensamento Computacional (PENSA-RN), uma parceria entre a UFRN/IMD e a Secretaria de Educação do RN. Detalha o artefato central — um curso de 60 horas distribuído em 5 módulos progressivos EaD — cujo objetivo é ensinar desde os fundamentos teóricos do PC e computação desplugada até a criação e implementação de projetos de jogos educacionais aplicados ao currículo escolar. Também apresenta a Estrutura Taxonômica Integrada (PC × Bloom × Jogos Digitais), um modelo conceitual que articula as competências do PC, os níveis cognitivos da Taxonomia de Bloom e a complexidade do design de jogos. Esse "funil de design" guia o professor-autor: parte da habilidade da BNCC, mapeia o nível cognitivo de Bloom (Lembrar→Criar), aplica os pilares do PC como ferramentas de design, e resulta no jogo educacional como artefato integrado.</p>
+    <div class="tags"><span class="tag">PENSA-RN</span><span class="tag">EaD</span><span class="tag">Scratch</span><span class="tag">60h</span><span class="tag">Taxonomia PC×Bloom×Jogos</span></div>
+</div>
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- banner -->
+  <path d="M55 12 L225 12 L220 25 L225 38 L55 38 L60 25Z" stroke-width="1"/>
+  <text x="95" y="29" font-size="10" font-weight="700" fill="currentColor" stroke="none">PENSA-RN</text>
+  <!-- teacher guiding -->
+  <circle cx="55" cy="72" r="11"/>
+  <circle cx="55" cy="59" r="6" stroke-width=".8"/>
+  <circle cx="52" cy="71" r="1" fill="currentColor"/>
+  <circle cx="58" cy="71" r="1" fill="currentColor"/>
+  <path d="M53 76 Q55 78 58 76" stroke-width=".7"/>
+  <line x1="55" y1="83" x2="55" y2="115" stroke-width="1.3"/>
+  <path d="M55 93 Q42 98 37 102" stroke-width="1.1"/>
+  <path d="M55 93 Q70 88 82 84" stroke-width="1.1"/><!-- pointing -->
+  <line x1="55" y1="115" x2="48" y2="138" stroke-width="1.2"/>
+  <line x1="55" y1="115" x2="62" y2="138" stroke-width="1.2"/>
+  <!-- child 1 at computer -->
+  <circle cx="130" cy="78" r="9"/>
+  <path d="M122 74 Q121 67 127 65 Q133 65 137 67 Q138 74" stroke-width=".8"/>
+  <circle cx="127" cy="77" r=".9" fill="currentColor"/>
+  <circle cx="133" cy="77" r=".9" fill="currentColor"/>
+  <line x1="130" y1="87" x2="130" y2="110" stroke-width="1.2"/>
+  <path d="M130 95 Q120 100 115 104" stroke-width="1"/>
+  <path d="M130 95 Q140 100 145 104" stroke-width="1"/>
+  <!-- computer -->
+  <rect x="112" y="108" width="36" height="25" stroke-width="1"/>
+  <rect x="120" y="133" width="20" height="3" stroke-width=".7"/>
+  <!-- Scratch cat -->
+  <circle cx="130" cy="119" r="5.5" stroke-width=".7"/>
+  <path d="M125 114 L123 110" stroke-width=".6"/>
+  <path d="M135 114 L137 110" stroke-width=".6"/>
+  <circle cx="128" cy="118" r=".8" fill="currentColor"/>
+  <circle cx="132" cy="118" r=".8" fill="currentColor"/>
+  <!-- child 2 at computer -->
+  <circle cx="200" cy="78" r="9"/>
+  <path d="M192 74 L189 92" stroke-width=".7"/><!-- braid -->
+  <path d="M208 74 L211 92" stroke-width=".7"/><!-- braid -->
+  <circle cx="197" cy="77" r=".9" fill="currentColor"/>
+  <circle cx="203" cy="77" r=".9" fill="currentColor"/>
+  <line x1="200" y1="87" x2="200" y2="110" stroke-width="1.2"/>
+  <path d="M200 95 Q190 100 185 104" stroke-width="1"/>
+  <path d="M200 95 Q210 100 215 104" stroke-width="1"/>
+  <rect x="182" y="108" width="36" height="25" stroke-width="1"/>
+  <rect x="190" y="133" width="20" height="3" stroke-width=".7"/>
+  <!-- code on screen -->
+  <line x1="187" y1="115" x2="205" y2="115" stroke-width=".5"/>
+  <line x1="189" y1="119" x2="210" y2="119" stroke-width=".5"/>
+  <line x1="189" y1="123" x2="203" y2="123" stroke-width=".5"/>
+  <line x1="187" y1="127" x2="198" y2="127" stroke-width=".5"/>
+  <!-- 5 modules as stepping path -->
+  <ellipse cx="55" cy="175" rx="18" ry="6" stroke-width=".9"/>
+  <text x="49" y="178" font-size="6" fill="currentColor" stroke="none">M1</text>
+  <ellipse cx="100" cy="168" rx="18" ry="6" stroke-width=".9"/>
+  <text x="94" y="171" font-size="6" fill="currentColor" stroke="none">M2</text>
+  <ellipse cx="145" cy="175" rx="18" ry="6" stroke-width=".9"/>
+  <text x="139" y="178" font-size="6" fill="currentColor" stroke="none">M3</text>
+  <ellipse cx="190" cy="168" rx="18" ry="6" stroke-width=".9"/>
+  <text x="184" y="171" font-size="6" fill="currentColor" stroke="none">M4</text>
+  <ellipse cx="235" cy="175" rx="18" ry="6" stroke-width=".9"/>
+  <text x="229" y="178" font-size="6" fill="currentColor" stroke="none">M5</text>
+  <!-- arrows -->
+  <path d="M73 174 L80 170" stroke-width=".6"/>
+  <path d="M118 169 L125 173" stroke-width=".6"/>
+  <path d="M163 174 L170 170" stroke-width=".6"/>
+  <path d="M208 169 L215 173" stroke-width=".6"/>
+  <!-- labels under modules -->
+  <text x="30" y="190" font-size="4.5" fill="currentColor" stroke="none">Fundamentos</text>
+  <text x="82" y="183" font-size="4.5" fill="currentColor" stroke="none">Desplugada</text>
+  <text x="131" y="190" font-size="4.5" fill="currentColor" stroke="none">Scratch</text>
+  <text x="177" y="183" font-size="4.5" fill="currentColor" stroke="none">Jogos</text>
+  <text x="218" y="190" font-size="4.5" fill="currentColor" stroke="none">Aplicação</text>
+  <!-- coqueiro outside window -->
+  <rect x="240" y="52" width="30" height="30" stroke-width=".7"/>
+  <path d="M255 82 Q256 70 254 58" stroke-width=".7"/>
+  <path d="M254 58 Q249 53 247 55" stroke-width=".5"/>
+  <path d="M254 58 Q259 52 262 54" stroke-width=".5"/>
+  <!-- tamanduá (anteater - fauna NE) hint -->
+  <path d="M15 210 Q25 208 35 210 Q42 212 48 210" stroke-width=".7"/>
+  <path d="M15 210 Q10 208 5 210" stroke-width=".6"/><!-- snout -->
+  <line x1="22" y1="210" x2="20" y2="206" stroke-width=".4"/>
+  <line x1="35" y1="210" x2="33" y2="206" stroke-width=".4"/>
+  <path d="M48 210 Q55 208 60 212 Q62 215 58 216" stroke-width=".5"/><!-- tail -->
+</svg>
+</div>
+</div>
+
+<!-- ── CH6: Resultados — Evasão→suporte→núcleo resiliente, WhatsApp, sala de aula ── -->
+<div class="ch-card reverse">
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5">
+  <!-- empty desks (evasão silenciosa) faded -->
+  <rect x="10" y="30" width="25" height="3" stroke-width=".6" opacity=".25"/>
+  <line x1="15" y1="33" x2="13" y2="48" stroke-width=".5" opacity=".25"/>
+  <line x1="30" y1="33" x2="32" y2="48" stroke-width=".5" opacity=".25"/>
+  <rect x="45" y="35" width="25" height="3" stroke-width=".6" opacity=".25"/>
+  <line x1="50" y1="38" x2="48" y2="53" stroke-width=".5" opacity=".25"/>
+  <line x1="65" y1="38" x2="67" y2="53" stroke-width=".5" opacity=".25"/>
+  <rect x="10" y="55" width="25" height="3" stroke-width=".6" opacity=".2"/>
+  <rect x="45" y="60" width="25" height="3" stroke-width=".6" opacity=".2"/>
+  <!-- 225 → 68 counter -->
+  <text x="10" y="22" font-size="7" fill="currentColor" stroke="none" opacity=".5">225</text>
+  <line x1="30" y1="20" x2="55" y2="20" stroke-width=".6"/>
+  <polygon points="55,20 51,17 51,23" fill="currentColor" stroke="none"/>
+  <text x="58" y="22" font-size="7" fill="currentColor" stroke="none" font-weight="700">157</text>
+  <!-- WhatsApp phone -->
+  <rect x="90" y="18" width="22" height="38" rx="3" stroke-width=".9"/>
+  <circle cx="101" cy="52" r="2" stroke-width=".5"/>
+  <rect x="93" y="22" width="16" height="26" stroke-width=".5"/>
+  <!-- chat bubbles -->
+  <rect x="95" y="25" width="10" height="4" rx="1" stroke-width=".4"/>
+  <rect x="98" y="31" width="8" height="4" rx="1" stroke-width=".4"/>
+  <rect x="95" y="37" width="11" height="4" rx="1" stroke-width=".4"/>
+  <!-- arrow: support → resilience -->
+  <line x1="115" y1="37" x2="140" y2="37" stroke-width=".8"/>
+  <polygon points="140,37 136,34 136,40" fill="currentColor" stroke="none"/>
+  <!-- RESILIENT CORE: 3 happy kids with laptops -->
+  <!-- child 1 celebrating -->
+  <circle cx="160" cy="80" r="10"/>
+  <path d="M151 75 Q150 68 155 66 Q160 64 165 66 Q170 68 169 75" stroke-width=".9"/>
+  <circle cx="157" cy="79" r="1" fill="currentColor"/>
+  <circle cx="163" cy="79" r="1" fill="currentColor"/>
+  <path d="M157 84 Q160 87 163 84" stroke-width=".8"/><!-- big smile -->
+  <line x1="160" y1="90" x2="160" y2="118" stroke-width="1.3"/>
+  <!-- arms up -->
+  <path d="M160 98 Q148 92 143 84" stroke-width="1.1"/>
+  <path d="M160 98 Q172 92 177 84" stroke-width="1.1"/>
+  <polygon points="141,80 143,76 145,80 140,78 146,78" fill="currentColor" stroke="none"/>
+  <polygon points="179,80 181,76 183,80 178,78 184,78" fill="currentColor" stroke="none"/>
+  <line x1="160" y1="118" x2="154" y2="138" stroke-width="1.1"/>
+  <line x1="160" y1="118" x2="166" y2="138" stroke-width="1.1"/>
+  <!-- laptop with game -->
+  <rect x="146" y="138" width="28" height="3" stroke-width=".8"/>
+  <path d="M149 138 L151 126 L169 126 L171 138" stroke-width=".9"/>
+  <rect x="154" y="130" width="4" height="5" fill="currentColor" stroke="none"/><!-- player -->
+  <rect x="161" y="132" width="6" height="2" stroke-width=".4"/><!-- platform -->
+  <!-- child 2 -->
+  <circle cx="215" cy="85" r="10"/>
+  <path d="M206 81 L203 98" stroke-width=".7"/>
+  <path d="M224 81 L227 98" stroke-width=".7"/>
+  <circle cx="212" cy="84" r="1" fill="currentColor"/>
+  <circle cx="218" cy="84" r="1" fill="currentColor"/>
+  <path d="M213 89 Q215 91 218 89" stroke-width=".7"/>
+  <line x1="215" y1="95" x2="215" y2="122" stroke-width="1.3"/>
+  <path d="M215 103 Q205 108 200 112" stroke-width="1"/>
+  <path d="M215 103 Q225 108 230 112" stroke-width="1"/>
+  <line x1="215" y1="122" x2="209" y2="142" stroke-width="1.1"/>
+  <line x1="215" y1="122" x2="221" y2="142" stroke-width="1.1"/>
+  <rect x="201" y="142" width="28" height="3" stroke-width=".8"/>
+  <path d="M204 142 L206 130 L224 130 L226 142" stroke-width=".9"/>
+  <!-- child 3 — thumbs up -->
+  <circle cx="260" cy="80" r="10"/>
+  <path d="M251 75 Q250 68 256 66 Q262 66 266 68 Q267 75" stroke-width=".9"/>
+  <circle cx="257" cy="79" r="1" fill="currentColor"/>
+  <circle cx="263" cy="79" r="1" fill="currentColor"/>
+  <path d="M258 84 Q260 86 263 84" stroke-width=".7"/>
+  <line x1="260" y1="90" x2="260" y2="118" stroke-width="1.3"/>
+  <path d="M260 100 Q248 105 244 108" stroke-width="1"/>
+  <path d="M260 100 Q272 96 276 90" stroke-width="1.1"/>
+  <!-- thumbs up -->
+  <rect x="275" y="84" width="4" height="8" rx="1" stroke-width=".7"/>
+  <line x1="260" y1="118" x2="254" y2="138" stroke-width="1.1"/>
+  <line x1="260" y1="118" x2="266" y2="138" stroke-width="1.1"/>
+  <!-- funnel diagram -->
+  <path d="M30 175 L110 175 L95 190 L45 190Z" stroke-width=".9"/>
+  <text x="52" y="186" font-size="6" fill="currentColor" stroke="none">225</text>
+  <path d="M95 190 L85 205 L55 205 L45 190" stroke-width=".8"/>
+  <text x="58" y="201" font-size="6" fill="currentColor" stroke="none">157</text>
+  <path d="M85 205 L78 218 L62 218 L55 205" stroke-width=".7"/>
+  <text x="64" y="215" font-size="5.5" fill="currentColor" stroke="none" font-weight="700">Núcleo</text>
+  <!-- webinar icon -->
+  <rect x="145" y="165" width="30" height="20" stroke-width=".8"/>
+  <circle cx="160" cy="173" r="4" stroke-width=".6"/>
+  <path d="M155 180 Q160 183 165 180" stroke-width=".5"/>
+  <text x="143" y="195" font-size="5" fill="currentColor" stroke="none">Webinars 2x/sem</text>
+  <!-- tutoria -->
+  <circle cx="220" cy="172" r="8" stroke-width=".8"/>
+  <circle cx="220" cy="165" r="4" stroke-width=".5"/>
+  <text x="210" y="195" font-size="5" fill="currentColor" stroke="none">1+3 tutores</text>
+  <!-- coqueiro -->
+  <path d="M270 200 Q273 170 268 145" stroke-width="1.4"/>
+  <path d="M268 145 Q258 135 252 138" stroke-width="1"/>
+  <path d="M268 145 Q275 132 282 135" stroke-width="1"/>
+  <path d="M268 145 Q262 130 255 128" stroke-width="1"/>
+  <!-- garça bird -->
+  <path d="M25 30 Q30 25 35 30" stroke-width=".7"/>
+  <path d="M40 35 Q45 30 50 35" stroke-width=".7"/>
+</svg>
+</div>
+<div class="ch-content">
+    <div class="ch-num">Capítulo 6</div>
+    <h3>Resultados e Discussões</h3>
+    <p>Analisa a aplicação do curso evidenciando o desafio inicial da "evasão silenciosa" — 155 dos 225 inscritos não acessaram a plataforma na primeira semana. A equipe abandonou o modelo puramente autoinstrucional e implementou um ecossistema de alto suporte humano: grupo de WhatsApp como canal de "baixa fricção" para suporte técnico e acolhimento afetivo, webinars síncronos semanais (segundas e quartas às 18h), tutoria ativa com equipe de 1 pesquisador + 3 tutores em escala, comunicação proativa com mensagens individuais, e adaptações para letramento digital (pastas Google Drive para quem não dominava o AVA). Essa arquitetura reduziu os não-acessos de 155 para 68 na terceira semana — queda de 56%. A pesquisa revela o fenômeno do "funil qualitativo": embora o número de participantes tenha reduzido, o "núcleo resiliente" que permaneceu apresentou aprofundamento conceitual intenso, produzindo jogos complexos no Scratch e planos de aula com maturidade TPACK demonstrada.</p>
+    <div class="tags"><span class="tag">Evasão Silenciosa</span><span class="tag">Funil Qualitativo</span><span class="tag">Núcleo Resiliente</span><span class="tag">Suporte Socioafetivo</span><span class="tag">WhatsApp</span></div>
+</div>
+</div>
+
+<!-- ── CH7: Considerações Finais — Comunidade de prática, políticas, TPACK, RN landscape ── -->
+<div class="ch-card">
+<div class="ch-content">
+    <div class="ch-num">Capítulo 7</div>
+    <h3>Considerações Finais</h3>
+    <p>Conclui que a criação de jogos digitais educacionais força o professor a dominar o TPACK de forma integrada — o docente precisa articular simultaneamente o conteúdo curricular, a abordagem pedagógica e a ferramenta tecnológica. Demonstra que o sucesso de programas de formação não está apenas no conteúdo online, mas na adoção de um modelo de alto suporte humano, mediação constante e acompanhamento socioafetivo. As recomendações para políticas públicas destacam: a urgência de financiamento contínuo para jornadas formativas extensas (não apenas workshops pontuais), a importância de estruturar comunidades de prática permanentes entre docentes, e a necessidade de infraestrutura tecnológica mínima nas escolas como pré-condição para qualquer programa de integração do PC ao currículo.</p>
+    <div class="tags"><span class="tag">TPACK Integrado</span><span class="tag">Suporte Humano</span><span class="tag">Políticas Públicas</span><span class="tag">Comunidades de Prática</span><span class="tag">Financiamento</span></div>
+</div>
+<div class="ch-illust">
+<svg viewBox="0 0 280 240" class="sketch-svg" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6">
+  <!-- RN coastline background -->
+  <path d="M0 35 Q70 28 140 35 Q210 42 280 30" stroke-width=".6" stroke-dasharray="4 3"/>
+  <path d="M0 40 Q90 34 180 40 Q250 46 280 38" stroke-width=".4" stroke-dasharray="3 4"/>
+  <!-- Ponte Newton Navarro silhouette far -->
+  <path d="M180 28 L200 28" stroke-width=".8"/>
+  <line x1="190" y1="28" x2="190" y2="12" stroke-width=".6"/>
+  <path d="M190 12 L182 26" stroke-width=".4"/>
+  <path d="M190 12 L198 26" stroke-width=".4"/>
+  <!-- jangada small -->
+  <path d="M220 30 L235 30 L237 34 L218 34Z" stroke-width=".6"/>
+  <line x1="228" y1="30" x2="228" y2="22" stroke-width=".5"/>
+  <path d="M228 22 L236 28 L228 30" stroke-width=".5"/>
+  <!-- school building -->
+  <rect x="15" y="60" width="90" height="55" rx="2" stroke-width="1.2"/>
+  <path d="M15 60 L60 42 L105 60" stroke-width="1.2"/>
+  <!-- school windows -->
+  <rect x="25" y="72" width="14" height="12" rx="1" stroke-width=".7"/>
+  <rect x="45" y="72" width="14" height="12" rx="1" stroke-width=".7"/>
+  <rect x="65" y="72" width="14" height="12" rx="1" stroke-width=".7"/>
+  <rect x="85" y="72" width="14" height="12" rx="1" stroke-width=".7"/>
+  <!-- school door -->
+  <rect x="48" y="95" width="18" height="20" rx="1" stroke-width=".8"/>
+  <circle cx="63" cy="105" r="1.2" fill="currentColor"/>
+  <!-- flag on school -->
+  <line x1="60" y1="42" x2="60" y2="30" stroke-width=".7"/>
+  <path d="M60 30 L72 34 L60 38" stroke-width=".6"/>
+  <!-- community of practice circle — teachers + children holding hands -->
+  <!-- teacher 1 (taller, bun hair) -->
+  <circle cx="145" cy="80" r="9"/>
+  <circle cx="145" cy="69" r="5" stroke-width=".7"/>
+  <circle cx="143" cy="79" r="1" fill="currentColor"/>
+  <circle cx="148" cy="79" r="1" fill="currentColor"/>
+  <line x1="145" y1="89" x2="145" y2="112" stroke-width="1.2"/>
+  <path d="M145 96 Q135 100 130 103" stroke-width="1"/>
+  <path d="M145 96 Q155 100 160 103" stroke-width="1"/>
+  <line x1="145" y1="112" x2="140" y2="128" stroke-width="1.1"/>
+  <line x1="145" y1="112" x2="150" y2="128" stroke-width="1.1"/>
+  <!-- child 1 (afro hair) -->
+  <circle cx="175" cy="88" r="7"/>
+  <path d="M168 84 Q168 76 175 75 Q182 76 182 84" stroke-width=".8"/>
+  <circle cx="173" cy="87" r=".8" fill="currentColor"/>
+  <circle cx="177" cy="87" r=".8" fill="currentColor"/>
+  <line x1="175" y1="95" x2="175" y2="115" stroke-width="1.1"/>
+  <path d="M175 102 Q167 106 163 108" stroke-width=".9"/>
+  <path d="M175 102 Q183 106 187 108" stroke-width=".9"/>
+  <line x1="175" y1="115" x2="171" y2="128" stroke-width="1"/>
+  <line x1="175" y1="115" x2="179" y2="128" stroke-width="1"/>
+  <!-- child 2 (braids) -->
+  <circle cx="205" cy="85" r="7"/>
+  <path d="M198 81 L196 96" stroke-width=".6"/>
+  <path d="M212 81 L214 96" stroke-width=".6"/>
+  <circle cx="203" cy="84" r=".8" fill="currentColor"/>
+  <circle cx="207" cy="84" r=".8" fill="currentColor"/>
+  <line x1="205" y1="92" x2="205" y2="112" stroke-width="1.1"/>
+  <path d="M205 99 Q197 103 193 105" stroke-width=".9"/>
+  <path d="M205 99 Q213 103 217 105" stroke-width=".9"/>
+  <line x1="205" y1="112" x2="201" y2="128" stroke-width="1"/>
+  <line x1="205" y1="112" x2="209" y2="128" stroke-width="1"/>
+  <!-- child 3 (curly hair, laptop) -->
+  <circle cx="235" cy="88" r="7"/>
+  <path d="M228 84 Q228 78 235 77 Q242 78 242 84" stroke-width=".8" stroke-dasharray="1.5 1"/>
+  <circle cx="233" cy="87" r=".8" fill="currentColor"/>
+  <circle cx="237" cy="87" r=".8" fill="currentColor"/>
+  <line x1="235" y1="95" x2="235" y2="115" stroke-width="1.1"/>
+  <path d="M235 102 Q227 106 223 108" stroke-width=".9"/>
+  <path d="M235 102 Q243 106 247 108" stroke-width=".9"/>
+  <line x1="235" y1="115" x2="231" y2="128" stroke-width="1"/>
+  <line x1="235" y1="115" x2="239" y2="128" stroke-width="1"/>
+  <!-- laptop for child 3 -->
+  <rect x="224" y="108" width="16" height="2.5" rx=".5" stroke-width=".6"/>
+  <path d="M226 108 L227 102 L240 102 L241 108" stroke-width=".6"/>
+  <!-- teacher 2 (glasses, taller) -->
+  <circle cx="260" cy="80" r="9"/>
+  <path d="M254 78 L258 78 M262 78 L266 78" stroke-width=".6"/>
+  <circle cx="256" cy="78" r="2.5" stroke-width=".5" fill="none"/>
+  <circle cx="264" cy="78" r="2.5" stroke-width=".5" fill="none"/>
+  <circle cx="257" cy="79" r=".8" fill="currentColor"/>
+  <circle cx="263" cy="79" r=".8" fill="currentColor"/>
+  <line x1="260" y1="89" x2="260" y2="112" stroke-width="1.2"/>
+  <path d="M260 96 Q250 100 245 103" stroke-width="1"/>
+  <path d="M260 96 Q270 100 275 103" stroke-width="1"/>
+  <line x1="260" y1="112" x2="255" y2="128" stroke-width="1.1"/>
+  <line x1="260" y1="112" x2="265" y2="128" stroke-width="1.1"/>
+  <!-- dashed connection lines (community bonds) -->
+  <line x1="160" y1="103" x2="163" y2="108" stroke-width=".5" stroke-dasharray="2 2"/>
+  <line x1="187" y1="108" x2="193" y2="105" stroke-width=".5" stroke-dasharray="2 2"/>
+  <line x1="217" y1="105" x2="223" y2="108" stroke-width=".5" stroke-dasharray="2 2"/>
+  <line x1="247" y1="108" x2="245" y2="103" stroke-width=".5" stroke-dasharray="2 2"/>
+  <!-- TPACK Venn small -->
+  <circle cx="155" cy="150" r="12" stroke-width=".6" stroke-dasharray="2 2"/>
+  <circle cx="165" cy="150" r="12" stroke-width=".6" stroke-dasharray="2 2"/>
+  <circle cx="160" cy="140" r="12" stroke-width=".6" stroke-dasharray="2 2"/>
+  <text x="150" y="154" font-size="4" fill="currentColor" stroke="none">TPACK</text>
+  <!-- policy document / scroll -->
+  <rect x="200" y="138" width="28" height="36" rx="2" stroke-width=".8"/>
+  <line x1="205" y1="146" x2="222" y2="146" stroke-width=".4"/>
+  <line x1="205" y1="150" x2="222" y2="150" stroke-width=".4"/>
+  <line x1="205" y1="154" x2="222" y2="154" stroke-width=".4"/>
+  <line x1="205" y1="158" x2="218" y2="158" stroke-width=".4"/>
+  <text x="203" y="169" font-size="3.5" fill="currentColor" stroke="none">Políticas</text>
+  <text x="204" y="173" font-size="3.5" fill="currentColor" stroke="none">Públicas</text>
+  <!-- checkmark on document -->
+  <path d="M218 162 L221 166 L228 158" stroke-width=".7"/>
+  <!-- mandacaru cactus -->
+  <path d="M250 175 L250 148" stroke-width="1.4"/>
+  <path d="M250 160 Q242 155 240 148" stroke-width="1"/>
+  <path d="M250 155 Q258 150 260 143" stroke-width="1"/>
+  <path d="M250 165 Q244 162 242 157" stroke-width=".8"/>
+  <!-- ground / dunes -->
+  <path d="M0 195 Q50 188 100 192 Q160 198 220 190 Q260 186 280 189" stroke-width=".8"/>
+  <!-- coqueiro -->
+  <path d="M25 192 Q28 165 23 140" stroke-width="1.4"/>
+  <path d="M23 140 Q13 130 8 133" stroke-width="1"/>
+  <path d="M23 140 Q30 127 37 130" stroke-width="1"/>
+  <path d="M23 140 Q17 125 10 123" stroke-width="1"/>
+  <!-- garças flying -->
+  <path d="M120 20 Q125 15 130 20" stroke-width=".6"/>
+  <path d="M135 25 Q140 20 145 25" stroke-width=".6"/>
+  <path d="M108 28 Q113 23 118 28" stroke-width=".5"/>
+  <!-- calango lizard -->
+  <path d="M115 195 Q120 192 128 193" stroke-width=".6"/>
+  <circle cx="130" cy="192" r="1.5" stroke-width=".5"/>
+  <path d="M128 193 Q135 194 140 197" stroke-width=".5"/>
+  <path d="M122 192 L120 188" stroke-width=".4"/>
+  <path d="M126 193 L125 189" stroke-width=".4"/>
+  <!-- abstract connecting arcs (knowledge flow) -->
+  <path d="M105 90 Q120 70 140 80" stroke-width=".5" stroke-dasharray="3 3"/>
+  <path d="M60 115 Q100 130 140 128" stroke-width=".4" stroke-dasharray="4 3"/>
+  <!-- infinity / continuity symbol -->
+  <path d="M185 185 Q192 178 199 185 Q206 192 199 185 Q192 178 185 185" stroke-width=".7"/>
+  <text x="175" y="200" font-size="4" fill="currentColor" stroke="none">Continuidade</text>
+</svg>
+</div>
+</div>
+
+</section>
+
+<!-- ═══════════════════ CITATION ═══════════════════ -->
+<section id="citacao">
+<h2>Como Citar</h2>
+<div class="cite-row">
+    <div class="cite-block">
+        <label>Dissertação — ABNT</label>
+        <div class="cite-box" id="cD">GUIMARÃES, C. A. S. Integrando o Pensamento Computacional ao Currículo por Meio de Formação Docente Baseada no Desenvolvimento de Jogos Digitais. 2022. Dissertação (Mestrado em Inovação em Tecnologias Educacionais) – PPgITE, Universidade Federal do Rio Grande do Norte, Natal, 2022.</div>
+        <div class="copy-row"><button class="copy-btn" onclick="cp('cD','fD')">Copiar</button><span class="copy-ok" id="fD">Copiado!</span></div>
+    </div>
+    <div class="cite-block">
+        <label>Artigo RBIE — ABNT</label>
+        <div class="cite-box" id="cA">BULCÃO, J. da S. B.; MADEIRA, C. A. G.; GUIMARÃES, C. A. S.; SOUSA, C. A. de. Capacitando Professores no Programa Norte-rio-grandense de Pensamento Computacional. Revista Brasileira de Informática na Educação, v. 29, p. 1178–1201, 2021. DOI: 10.5753/rbie.2021.2120.</div>
+        <div class="copy-row"><button class="copy-btn" onclick="cp('cA','fA')">Copiar</button><span class="copy-ok" id="fA">Copiado!</span></div>
+    </div>
+</div>
+</section>
+
+<!-- ═══════════════════ REFERÊNCIAS ═══════════════════ -->
+<section id="referencias">
+<h2>Referências</h2>
+<details>
+    <summary>Ver lista completa (51 referências)</summary>
+    <ol class="ref-list">
+        <li>AHO, A. V. Computation and Computational Thinking. <em>The Computer Journal</em>, 2012.</li>
+        <li>AIRES, A.; MADEIRA, C. J. Educação com jogos digitais. <em>RBIE</em>, 2020.</li>
+        <li>ALFARO-PONCE, B.; PATIÑO, A.; SANABRIA-Z, J. Components of computational thinking in citizen science games. <em>Cogent Education</em>, 2023.</li>
+        <li>BACICH, L.; MORAN, J. <em>Metodologias ativas para uma educação inovadora</em>. Penso, 2018.</li>
+        <li>BANCO MUNDIAL. Habilidades para o trabalho e a vida. 2018.</li>
+        <li>BARCELOS, G. T.; MUNIZ, J.; SILVEIRA, I. F. Formação Continuada a Distância de Professores. <em>CBIE</em>, 2018.</li>
+        <li>BARR, V.; STEPHENSON, C. Bringing computational thinking to K-12. <em>ACM Inroads</em>, 2011.</li>
+        <li>BERS, M. U. <em>Coding as a playground</em>. Penso, 2020.</li>
+        <li>BLIKSTEIN, P. Apropriação, equidade e a computação na educação básica. <em>Em Aberto</em>, 2018.</li>
+        <li>BOCCONI, S. et al. Developing computational thinking in compulsory education. EU, 2016.</li>
+        <li>BORBA, M. C.; SCUCUGLIA, R. S. C.; GADANIDIS, G. <em>Fases das tecnologias digitais em Educação Matemática</em>. Autêntica, 2018.</li>
+        <li>BRASIL. <em>Base Nacional Comum Curricular</em>. MEC, 2017.</li>
+        <li>BRASIL. Parecer CNE/CEB nº 2/2022. Diretrizes sobre Computação na Educação Básica. 2022.</li>
+        <li>BRENNAN, K.; RESNICK, M. New frameworks for studying computational thinking. <em>AERA</em>, 2012.</li>
+        <li>BULCÃO, J. S. B.; MADEIRA, C. A. G.; GUIMARÃES, C. A. S.; SOUSA, R. Capacitando Professores no PENSA-RN. <em>RBIE</em>, 2021.</li>
+        <li>CARVALHO, A. C.; GIARLLARI, T. G. N.; TARCIA, L. Frameworks para jogos educacionais. <em>SBIE</em>, 2015.</li>
+        <li>CASTELLS, M. <em>A Sociedade em Rede</em>. Paz e Terra, 1999.</li>
+        <li>CIEB. <em>Currículo de Referência em Tecnologia e Computação</em>. 2019.</li>
+        <li>CRESWELL, J. W.; PLANO CLARK, V. L. <em>Designing and conducting mixed methods research</em>. Sage, 2018.</li>
+        <li>DENNING, P. J.; TEDRE, M. <em>Computational thinking</em>. MIT Press, 2019.</li>
+        <li>DISESSA, A. A. <em>Changing minds</em>. MIT Press, 2001.</li>
+        <li>DLAB, M. H.; HOIC-BOZIC, N. Effectiveness of game development-based learning. <em>EIT</em>, 2021.</li>
+        <li>ERÜMIT, A. K.; BENZER, A. I.; ŞAHIN, G. Programming teaching in secondary education. <em>Croatian J. of Education</em>, 2020.</li>
+        <li>FERNANDES, J. C. N.; SILVEIRA, I. F. Jogos digitais educacionais e pensamento computacional. <em>REnCiMa</em>, 2019.</li>
+        <li>FÓRUM ECONÔMICO MUNDIAL. <em>Future of Jobs Report 2023</em>.</li>
+        <li>FORSSTRÖM, S.-E.; BOND, M. Meta-analysis of K-12 CT assessment. <em>Computers &amp; Education</em>, 2024.</li>
+        <li>GEE, J. P. <em>O que os videogames têm a nos ensinar</em>. WMF Martins Fontes, 2009.</li>
+        <li>GROVER, S.; PEA, R. Computational Thinking in K–12. <em>Educational Researcher</em>, 2013.</li>
+        <li>HEVNER, A. R. et al. Design science in IS research. <em>MIS Quarterly</em>, 2004.</li>
+        <li>KAFAI, Y. B.; BURKE, Q. <em>Connected gaming</em>. MIT Press, 2016.</li>
+        <li>KITCHENHAM, B. <em>Procedures for performing systematic reviews</em>. Keele University, 2004.</li>
+        <li>KONG, S.-C.; LAI, M.; SUN, D. Teacher development in CT. <em>Computers &amp; Education</em>, 2020.</li>
+        <li>LENGEL, J. G. <em>Education 3.0</em>. Teachers College Press, 2013.</li>
+        <li>LODI, M.; MARTINI, S. CT Between Papert and Wing. <em>Science &amp; Education</em>, 2021.</li>
+        <li>MATTAR, J. <em>Games em educação</em>. Pearson, 2010.</li>
+        <li>MISHRA, P.; KOEHLER, M. J. Technological Pedagogical Content Knowledge. <em>TCR</em>, 2006.</li>
+        <li>MOHER, D. et al. PRISMA statement. <em>PLoS Medicine</em>, 2009.</li>
+        <li>NASCIMENTO, M. R. Formação EAD no PENSA-RN. Dissertação – UFRN, 2022.</li>
+        <li>OBERER, B.; ERKOLLAR, A. Digital Games in Education. <em>JSCI</em>, 2024.</li>
+        <li>PAPERT, S. <em>Mindstorms</em>. Basic Books, 1980.</li>
+        <li>PEFFERS, K. et al. DSR Methodology for IS Research. <em>JMIS</em>, 2007.</li>
+        <li>PIRES, G. R. et al. Arrow: jogo digital para vetores. <em>SBIE</em>, 2019.</li>
+        <li>RAAEB, A. et al. Four approaches to K-12 CS education. <em>ACM Inroads</em>, 2020.</li>
+        <li>RESNICK, M. <em>Jardim de infância para a vida toda</em>. Penso, 2020.</li>
+        <li>SABRI, A.; FAKHRI, Y.; MOUMEN, A. Game-based learning in programming education. <em>IJTHI</em>, 2022.</li>
+        <li>SCHWAB, K. <em>A Quarta Revolução Industrial</em>. Edipro, 2019.</li>
+        <li>SILVA, J. B. da. Pensamento computacional no ensino de programação. <em>SBIE</em>, 2017.</li>
+        <li>SBC. <em>Diretrizes para Ensino de Computação na Educação Básica</em>. 2018.</li>
+        <li>VALENTE, J. A.; BLIKSTEIN, P. <em>Pensamento computacional, educação e tecnologia</em>. Unicamp/NIED, 2020.</li>
+        <li>WEINTROP, D. et al. Defining CT for math and science classrooms. <em>JSET</em>, 2016.</li>
+        <li>WING, J. M. Computational thinking. <em>Communications of the ACM</em>, 2006.</li>
+    </ol>
+</details>
+</section>
+
+<!-- LINKS -->
+<div class="links-row">
+    <a href="https://doi.org/10.5753/rbie.2021.2120" target="_blank">Artigo RBIE</a>
+    <a href="https://scholar.google.com/citations?user=XfzydjwAAAAJ&hl=pt-BR" target="_blank">Google Scholar</a>
+    <a href="https://orcid.org/0000-0003-0885-3916" target="_blank">ORCID</a>
+    <a href="https://pensarn.imd.ufrn.br/" target="_blank">PENSA-RN</a>
+    <a href="https://posgraduacao.ufrn.br/10481/programa/apresentacao" target="_blank">PPgITE/UFRN</a>
+</div>
+
+</div><!-- /wrap -->
+
+<footer><div class="wrap">&copy; 2022–2026 Carlos Artur de Souza Guimarães &middot; UFRN / Instituto Metrópole Digital</div></footer>
+
+<script>
+const dt=document.getElementById('dt'),h=document.documentElement;
+if(window.matchMedia('(prefers-color-scheme:dark)').matches){h.classList.add('dark');dt.textContent='\u2600';}
+dt.onclick=()=>{h.classList.toggle('dark');dt.textContent=h.classList.contains('dark')?'\u2600':'\u263E';};
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});}));
+function cp(cid,fid){navigator.clipboard.writeText(document.getElementById(cid).textContent).then(()=>{const f=document.getElementById(fid);f.classList.add('show');setTimeout(()=>f.classList.remove('show'),2500);});}
+</script>
+</body>
+</html>
